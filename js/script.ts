@@ -2,8 +2,11 @@
 
 // #################### Getting Elements Start ########################
 
+let newFirstBtn = document.getElementById("newfirst");
+let oldFirstBtn = document.getElementById("oldfirst");
 let cardContainer = document.querySelector("#cardContainer");
 let body = document.querySelector("body");
+// let body = document.getElementById("mainBody");-----> Why is this not working??????????
 
 // #################### Getting Elements End ########################
 
@@ -202,7 +205,14 @@ let kumamotoSection = document.querySelector("#kumamoto");
 let ogasawaraSection = document.querySelector("#ogasawara");
 
 // #################### Creating Sections End ########################
+// ####################
+// ####################
 
+// Creating One Array for all Cards for sorting
+let superArray = [];
+
+// ####################
+// ####################
 // #################### Creating Place Cards Start ########################
 // ---- empty Array for class Place ----
 let placeArray = [];
@@ -221,6 +231,7 @@ class Place {
     this.located = located;
     this.img = img;
     placeArray.push(this);
+    superArray.push(this);
   }
 
   renderPlaces() {
@@ -246,17 +257,17 @@ class Place {
 
 new Place(
   "Tokyo Digital Art Museum",
-  "06.08.2018",
+  "2018-08-06",
   dummyTextJap,
   "tokyo",
   "../img/digitalArtMuseum.jpg"
 );
 
-new Place("Shibuya", "14.08.2018", dummyTextJap, "tokyo", "../img/shibuya.jpg");
+new Place("Shibuya", "2018-12-14", dummyTextJap, "tokyo", "../img/shibuya.jpg");
 
 new Place(
   "Momochi Beach",
-  "19.06.2018",
+  "2018-07-26",
   dummyTextJap,
   "fukuoka",
   "../img/momochi.JPG"
@@ -264,12 +275,13 @@ new Place(
 
 new Place(
   "Ohori Park",
-  "04.03.2018",
+  "2018-03-29",
   dummyTextJap,
   "fukuoka",
   "../img/ohori-park.jpg"
 );
 
+// Get all cards in the right Section
 placeArray.forEach((value) => {
   if (value.located == "tokyo") {
     tokyoSection.innerHTML += value.renderPlaces();
@@ -286,7 +298,7 @@ placeArray.forEach((value) => {
   }
 });
 
-// ################# ???? funzt net ????? ##################
+// ################# ???? does not work ????? ##################
 
 // placeArray.forEach((value) => {
 //   switch (value.located) {
@@ -300,13 +312,16 @@ placeArray.forEach((value) => {
 // ###########################################################
 
 // #################### Creating Place Cards End ########################
-
+// #################### Creating Foodies Cards Start ########################
+// ---- empty Array for class Foodies ----
 let foodiesArray = [];
+// ---- Create all the Foodies Cards  ----
 
 class Foodies extends Place {
   constructor(place, date, opinion, located, img) {
     super(place, date, opinion, located, img);
     foodiesArray.push(this);
+    superArray.push(this);
   }
   renderFoodies() {
     return `    
@@ -331,7 +346,7 @@ class Foodies extends Place {
 
 new Foodies(
   "Shinjuku Fugu Ichiro",
-  "09.09.2018",
+  "2019-08-09",
   dummyTextJap,
   "tokyo",
   "../img/japanese-food-1.jpg"
@@ -339,12 +354,13 @@ new Foodies(
 
 new Foodies(
   "Senkichi Curry Udon",
-  "09.10.2018",
+  "2017-08-08",
   dummyTextJap,
   "tokyo",
   "../img/Curry-Udon.jpg"
 );
 
+// Get all cards in the right Section
 foodiesArray.forEach((value) => {
   if (value.located == "tokyo") {
     tokyoSection.innerHTML += value.renderFoodies();
@@ -361,12 +377,16 @@ foodiesArray.forEach((value) => {
   }
 });
 
+// #################### Creating Foodies Cards End ########################
+// #################### Creating Event Cards Start ########################
+// ---- empty Array for class Events ----
 let eventsArray = [];
-
+// ---- Create all the Events Cards  ----
 class Events extends Place {
   constructor(place, date, opinion, located, img) {
     super(place, date, opinion, located, img);
     eventsArray.push(this);
+    superArray.push(this);
   }
 
   renderEvents() {
@@ -389,15 +409,16 @@ class Events extends Place {
   }
 }
 
-new Events("Hanabi", "10.06.2018", dummyTextJap, "tokyo", "../img/hanabi.jpg");
+new Events("Hanabi", "2016-07-30", dummyTextJap, "tokyo", "../img/hanabi.jpg");
 new Events(
   "Enoshima Shonan no Hoseki",
-  "10.12.2018",
+  "2018-08-14",
   dummyTextJap,
   "tokyo",
   "../img/enoshima-shonen.jpg"
 );
 
+// Get all cards in the right Section
 eventsArray.forEach((value) => {
   if (value.located == "tokyo") {
     tokyoSection.innerHTML += value.renderEvents();
@@ -413,3 +434,47 @@ eventsArray.forEach((value) => {
     ogasawaraSection += value.renderEvents();
   }
 });
+
+// #################### Creating Event Cards Start ########################
+// ###################### Page Sorted ##########################
+
+// console.log(superArray);
+
+// sorting Decending start
+function sortDecending() {
+  let sortedArray = superArray.sort(byDateDec);
+  console.log(sortedArray);
+  return sortedArray;
+}
+
+function byDateDec(a, b) {
+  return new Date(a.date).valueOf() - new Date(b.date).valueOf();
+}
+
+// oldFirstBtn.addEventListener("click", () => {
+//   console.log("hallo");
+// });
+//
+
+oldFirstBtn.addEventListener("click", sortDecending, false);
+
+// sorting Decending end
+// sorting acendig start
+
+function sortAcending() {
+  let sortedArray = superArray.sort(byDateAc);
+  console.log(sortedArray);
+  return sortedArray;
+}
+
+function byDateAc(a, b) {
+  return new Date(b.date).valueOf() - new Date(a.date).valueOf();
+}
+
+newFirstBtn.addEventListener("click", sortAcending, false);
+
+// sorting acendig end
+
+// CALLING FUNCTIONS BECAUSE FOR SOME REASONS THE BUTTONS ARE NOT WORKING
+sortDecending();
+sortAcending();

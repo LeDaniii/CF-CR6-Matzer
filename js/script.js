@@ -13,8 +13,11 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 // #################### Getting Elements Start ########################
+var newFirstBtn = document.getElementById("newfirst");
+var oldFirstBtn = document.getElementById("oldfirst");
 var cardContainer = document.querySelector("#cardContainer");
 var body = document.querySelector("body");
+// let body = document.getElementById("mainBody");-----> Why is this not working??????????
 // #################### Getting Elements End ########################
 // #################### Dummies Start ########################
 // ---------- Dummy Text ---------
@@ -91,6 +94,12 @@ var miyazakiSection = document.querySelector("#miyazaki");
 var kumamotoSection = document.querySelector("#kumamoto");
 var ogasawaraSection = document.querySelector("#ogasawara");
 // #################### Creating Sections End ########################
+// ####################
+// ####################
+// Creating One Array for all Cards for sorting
+var superArray = [];
+// ####################
+// ####################
 // #################### Creating Place Cards Start ########################
 // ---- empty Array for class Place ----
 var placeArray = [];
@@ -103,16 +112,18 @@ var Place = /** @class */ (function () {
         this.located = located;
         this.img = img;
         placeArray.push(this);
+        superArray.push(this);
     }
     Place.prototype.renderPlaces = function () {
         return "    \n        <div class=\"background-card col-10 offset-2 my-2 row\">\n        <div class=\"col-8 p-3 text-light\">\n        <h1 class=\"text-white\">Places</h1>\n        <h1>" + this.place + "</h1>\n        <p>" + this.date + "</p>\n        <h3>Opinion</h3>\n        <p>\n        " + this.opinion + "\n        </p>\n      </div>\n      <img\n        class=\"col-4 img-fluid p-3\"\n        src=\"" + this.img + "\"\n        alt=\"\"\n      />\n    </div>";
     };
     return Place;
 }());
-new Place("Tokyo Digital Art Museum", "06.08.2018", dummyTextJap, "tokyo", "../img/digitalArtMuseum.jpg");
-new Place("Shibuya", "14.08.2018", dummyTextJap, "tokyo", "../img/shibuya.jpg");
-new Place("Momochi Beach", "19.06.2018", dummyTextJap, "fukuoka", "../img/momochi.JPG");
-new Place("Ohori Park", "04.03.2018", dummyTextJap, "fukuoka", "../img/ohori-park.jpg");
+new Place("Tokyo Digital Art Museum", "2018-08-06", dummyTextJap, "tokyo", "../img/digitalArtMuseum.jpg");
+new Place("Shibuya", "2018-12-14", dummyTextJap, "tokyo", "../img/shibuya.jpg");
+new Place("Momochi Beach", "2018-07-26", dummyTextJap, "fukuoka", "../img/momochi.JPG");
+new Place("Ohori Park", "2018-03-29", dummyTextJap, "fukuoka", "../img/ohori-park.jpg");
+// Get all cards in the right Section
 placeArray.forEach(function (value) {
     if (value.located == "tokyo") {
         tokyoSection.innerHTML += value.renderPlaces();
@@ -133,7 +144,7 @@ placeArray.forEach(function (value) {
         ogasawaraSection += value.renderPlaces();
     }
 });
-// ################# ???? funzt net ????? ##################
+// ################# ???? does not work ????? ##################
 // placeArray.forEach((value) => {
 //   switch (value.located) {
 //     case "tokyo":
@@ -144,12 +155,16 @@ placeArray.forEach(function (value) {
 // });
 // ###########################################################
 // #################### Creating Place Cards End ########################
+// #################### Creating Foodies Cards Start ########################
+// ---- empty Array for class Foodies ----
 var foodiesArray = [];
+// ---- Create all the Foodies Cards  ----
 var Foodies = /** @class */ (function (_super) {
     __extends(Foodies, _super);
     function Foodies(place, date, opinion, located, img) {
         var _this = _super.call(this, place, date, opinion, located, img) || this;
         foodiesArray.push(_this);
+        superArray.push(_this);
         return _this;
     }
     Foodies.prototype.renderFoodies = function () {
@@ -157,8 +172,9 @@ var Foodies = /** @class */ (function (_super) {
     };
     return Foodies;
 }(Place));
-new Foodies("Shinjuku Fugu Ichiro", "09.09.2018", dummyTextJap, "tokyo", "../img/japanese-food-1.jpg");
-new Foodies("Senkichi Curry Udon", "09.10.2018", dummyTextJap, "tokyo", "../img/Curry-Udon.jpg");
+new Foodies("Shinjuku Fugu Ichiro", "2019-08-09", dummyTextJap, "tokyo", "../img/japanese-food-1.jpg");
+new Foodies("Senkichi Curry Udon", "2017-08-08", dummyTextJap, "tokyo", "../img/Curry-Udon.jpg");
+// Get all cards in the right Section
 foodiesArray.forEach(function (value) {
     if (value.located == "tokyo") {
         tokyoSection.innerHTML += value.renderFoodies();
@@ -179,12 +195,17 @@ foodiesArray.forEach(function (value) {
         ogasawaraSection += value.renderFoodies();
     }
 });
+// #################### Creating Foodies Cards End ########################
+// #################### Creating Event Cards Start ########################
+// ---- empty Array for class Events ----
 var eventsArray = [];
+// ---- Create all the Events Cards  ----
 var Events = /** @class */ (function (_super) {
     __extends(Events, _super);
     function Events(place, date, opinion, located, img) {
         var _this = _super.call(this, place, date, opinion, located, img) || this;
         eventsArray.push(_this);
+        superArray.push(_this);
         return _this;
     }
     Events.prototype.renderEvents = function () {
@@ -192,8 +213,9 @@ var Events = /** @class */ (function (_super) {
     };
     return Events;
 }(Place));
-new Events("Hanabi", "10.06.2018", dummyTextJap, "tokyo", "../img/hanabi.jpg");
-new Events("Enoshima Shonan no Hoseki", "10.12.2018", dummyTextJap, "tokyo", "../img/enoshima-shonen.jpg");
+new Events("Hanabi", "2016-07-30", dummyTextJap, "tokyo", "../img/hanabi.jpg");
+new Events("Enoshima Shonan no Hoseki", "2018-08-14", dummyTextJap, "tokyo", "../img/enoshima-shonen.jpg");
+// Get all cards in the right Section
 eventsArray.forEach(function (value) {
     if (value.located == "tokyo") {
         tokyoSection.innerHTML += value.renderEvents();
@@ -214,3 +236,35 @@ eventsArray.forEach(function (value) {
         ogasawaraSection += value.renderEvents();
     }
 });
+// #################### Creating Event Cards Start ########################
+// ###################### Page Sorted ##########################
+// console.log(superArray);
+// sorting Decending start
+function sortDecending() {
+    var sortedArray = superArray.sort(byDateDec);
+    console.log(sortedArray);
+    return sortedArray;
+}
+function byDateDec(a, b) {
+    return new Date(a.date).valueOf() - new Date(b.date).valueOf();
+}
+// oldFirstBtn.addEventListener("click", () => {
+//   console.log("hallo");
+// });
+//
+oldFirstBtn.addEventListener("click", sortDecending, false);
+// sorting Decending end
+// sorting acendig start
+function sortAcending() {
+    var sortedArray = superArray.sort(byDateAc);
+    console.log(sortedArray);
+    return sortedArray;
+}
+function byDateAc(a, b) {
+    return new Date(b.date).valueOf() - new Date(a.date).valueOf();
+}
+newFirstBtn.addEventListener("click", sortAcending, false);
+// sorting acendig end
+// CALLING FUNCTIONS BECAUSE FOR SOME REASONS THE BUTTONS ARE NOT WORKING
+sortDecending();
+sortAcending();
